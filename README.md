@@ -1,4 +1,22 @@
-# ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory
+> **本仓库是对上游代码的复现实验（非官方实现）。**
+>
+> 上游把策略模型、裁判模型与检索向量全部绑定在 Gemini / Vertex AI 上。本仓库在不改动算法逻辑的前提下做了三件事：
+>
+> - 将策略、裁判、记忆提炼迁移到任意 OpenAI 兼容接口（实测 DeepSeek-chat）
+> - 将检索向量迁移到本地 bge-m3（sentence-transformers，完全离线）
+> - 修复了检索实现中「当前任务检索到自己」导致记忆注入恒为空的缺陷
+>
+> | 文档 | 内容 |
+> | --- | --- |
+> | [REPRODUCE.md](REPRODUCE.md) | 环境搭建与复现步骤、已知坑清单 |
+> | [REPORT_复现报告.md](REPORT_复现报告.md) | 三轮实验、注入审计、29 项问题与解决方案 |
+> | [report/report_assets/](report/report_assets/) | 实验结果图表 |
+>
+> **结果摘要**：shopping 站点 20 个任务双组对照，成功率 50% vs 50%（10/20），平均步数 6.4 → 8.2（+28%），
+> 记忆注入率 20/20。结论：机制可复现，该规模下未观察到成功率收益。
+>
+> 基于上游 Apache-2.0 代码修改，保留原 [LICENSE](LICENSE)。
+> # ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory
 
 ## 📜 Overview
 
