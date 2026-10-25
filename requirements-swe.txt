@@ -1,0 +1,28 @@
+# SWE-bench 分支依赖
+# 注意：本仓库第三方的 mini-swe-agent 用 `pip install -e ./third_party` 安装会失败
+#（pyproject 引用的 README/LICENSE 缺失；而且某些沙箱环境禁止删除工作区文件，
+#  editable 构建写 egg-info 时会 PermissionError）。这里改为「显式装依赖 + 用 PYTHONPATH」，
+# 需要时再 `pip install -e ./third_party`（补丁已补齐 README.md / LICENSE.md）。
+#
+# 安装（仓库根目录）：
+#   uv pip install -r requirements.txt -r requirements-swe.txt --python .venv/bin/python
+# 运行（仓库根目录, WSL/Linux）：
+#   export PYTHONPATH="$PWD/third_party/src:$PYTHONPATH"
+#   python -m minisweagent.run.mini_extra swebench --help
+
+# --- mini-swe-agent (third_party/pyproject.toml 的 dependencies) ---
+litellm>=1.75.5
+pyyaml
+requests
+jinja2
+tenacity
+rich
+python-dotenv
+typer
+platformdirs
+textual
+prompt_toolkit
+openai!=1.100.0,!=1.100.1
+
+# --- swebench.py: from datasets import load_dataset（pyproject 只放在 dev extra 里）---
+datasets

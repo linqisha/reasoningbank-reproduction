@@ -1,0 +1,36 @@
+# WebArena 分支依赖（README 里写的是 `pip install -r requirements.txt`，但仓库并没有这个文件）
+# 依据 pyproject.toml 的 dependencies 生成，并补上代码里实际 import 但未声明的包。
+# 安装：uv pip install -r requirements.txt --python .venv\Scripts\python.exe
+
+# --- pyproject.toml 中声明的（版本与仓库保持一致） ---
+browsergym==0.14.1
+browsergym-core==0.14.1
+browsergym-experiments==0.14.1
+browsergym-webarena==0.14.1
+playwright>=1.44.0
+anthropic>=0.64.0
+google-cloud-aiplatform>=1.108.0
+google-genai>=1.21.1
+langchain>=0.3.26
+langchain-anthropic>=0.3.19
+langchain-community>=0.3.26
+langchain-openai>=1.1.11
+openai>=2.26.0
+pillow>=11.2.1
+torch>=2.7.0
+
+# --- pyproject.toml 漏掉、但代码里直接 import 的（不装必报 ModuleNotFoundError） ---
+# agents/legacy/utils/chat_api.py: from transformers import pipeline / AutoTokenizer
+# agents/legacy/utils/chat_api.py: from huggingface_hub import InferenceClient
+# memory_management.py: from transformers import AutoTokenizer, AutoModel
+transformers>=4.53.0
+huggingface-hub>=0.30.0
+
+# --- 教学/工具依赖 ---
+numpy
+tqdm
+python-dotenv
+
+# --- 本地 embedding（RB_EMBED_PROVIDER=local）：把 query 变成向量，不花 API 费用 ---
+# 模型在第一次运行时下载（BAAI/bge-m3 约 2.2GB），需要设置 HF_ENDPOINT=https://hf-mirror.com
+sentence-transformers>=3.0
